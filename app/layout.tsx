@@ -13,9 +13,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    'https://daffa-taufiqurrahman-portfolio.awake-lotus-9864.chatgpt.site',
-  ),
   title: 'Daffa Taufiqurrahman — Software Engineer',
   description:
     'The portfolio of Daffa Taufiqurrahman, a software engineer crafting thoughtful digital products and memorable experiences.',
