@@ -5,7 +5,6 @@ import {
   ArrowDownRight,
   ArrowUpRight,
   BriefcaseBusiness,
-  Code2,
   GraduationCap,
   Mail,
   MapPin,
@@ -16,69 +15,81 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 
 // EDIT YOUR PORTFOLIO HERE — replace these template values with your own data.
 const portfolio = {
-  email: 'hello@daffa.dev',
+  email: 'daffataufiqurahman31@gmail.com',
   location: 'Indonesia · Open to worldwide opportunities',
   availability: 'Available for select projects',
   about:
     'I design and build digital products where thoughtful engineering meets memorable interaction. My focus is creating software that feels clear, fast, and genuinely useful.',
   stats: [
-    { value: '00+', label: 'Years experience' },
-    { value: '00+', label: 'Projects shipped' },
-    { value: '00%', label: 'Client satisfaction' },
+    { value: '2+', label: 'Years experience' },
+    { value: '20+', label: 'Projects shipped' },
+    { value: '3+', label: 'Freelance' },
   ],
   projects: [
     {
       number: '01',
-      title: 'Project Title',
-      type: 'Product Engineering',
+      title: 'Terraquake',
+      type: 'Earthquake Monitoring',
       description:
-        'Add a concise explanation of the product, your contribution, and the measurable outcome you created.',
-      stack: ['Next.js', 'TypeScript', 'PostgreSQL'],
-      href: '#',
+        'A real-time earthquake monitoring app with location search, severity sorting, and a dedicated station directory.',
+      stack: ['React', 'Tailwind CSS', 'Terraquake API'],
+      href: 'https://github.com/daff-png/terraquake-app',
+      image: '/projects/terraquake.png',
+      imageAlt: 'Terraquake dashboard showing recent earthquake data',
+      framework: 'react',
     },
     {
       number: '02',
-      title: 'Project Title',
-      type: 'Full-stack Platform',
+      title: 'Plant Inventory',
+      type: 'Inventory Management',
       description:
-        'Describe the challenge you solved, the people you solved it for, and why your technical approach mattered.',
-      stack: ['React', 'Node.js', 'Cloud'],
-      href: '#',
+        'A role-aware plant inventory system with plant records, growth progress, QR codes, exports, and soft-delete recovery.',
+      stack: ['Laravel', 'Tailwind CSS', 'MySQL'],
+      href: 'https://github.com/daff-png/plant-inventory',
+      image: '/projects/plant-inventory.png',
+      imageAlt: 'Plant Inventory dashboard',
+      framework: 'laravel',
     },
     {
       number: '03',
-      title: 'Project Title',
-      type: 'Interactive Experience',
+      title: 'TIX ID Clone',
+      type: 'Cinema Discovery',
       description:
-        'Use this space for a project that shows personality, craft, or a different side of your engineering work.',
-      stack: ['WebGL', 'Motion', 'API'],
-      href: '#',
+        'A TIX ID interface clone built as a hands-on exercise in recreating a polished movie discovery experience.',
+      stack: ['Laravel', 'Tailwind CSS', 'MySQL'],
+      href: 'https://github.com/daff-png/TIXID',
+      image: '/projects/tix-id.png',
+      imageAlt: 'TIX ID Clone movie discovery interface',
+      framework: 'laravel',
     },
   ],
   experience: [
     {
-      period: '20XX — PRESENT',
-      role: 'Your Current Role',
-      company: 'Company Name',
-      detail: 'Add your responsibilities, impact, and one strong result here.',
-    },
-    {
-      period: '20XX — 20XX',
-      role: 'Previous Role',
-      company: 'Company Name',
-      detail: 'Highlight the scope of your work and the value you delivered.',
+      period: '2026 — PRESENT',
+      role: 'Internship Fullstack Engineer',
+      company: 'Inilah.com',
+      detail: 'Fullstack Engineer using Next and Golang to build a web application for Inilah.com',
+      institutionLogo: '/institutions/inilah-mark.png',
+      institutionLogoAlt: 'Inilah.com logo',
+      logoKind: 'inilah',
     },
   ],
   education: [
     {
-      period: '20XX — 20XX',
-      degree: 'Your Degree / Study Program',
-      school: 'University or Institution',
+      period: '2024 — PRESENT',
+      degree: 'Computer Science',
+      school: 'SMK Wikrama Bogor',
+      institutionLogo: '/institutions/smk-wikrama.png',
+      institutionLogoAlt: 'SMK Wikrama Bogor logo',
+      logoKind: 'crest',
     },
     {
-      period: '20XX',
-      degree: 'Certification or Program',
-      school: 'Issuing Organization',
+      period: '2021 - 2024',
+      degree: 'Junior High School',
+      school: 'SMPN 2 Cicurug',
+      institutionLogo: '/institutions/smpn-2-cicurug-transparent.png',
+      institutionLogoAlt: 'SMPN 2 Cicurug logo',
+      logoKind: 'crest-clean',
     },
   ],
   skills: [
@@ -100,8 +111,32 @@ const portfolio = {
   ],
   // Replace the playlist ID in this URL with your favorite Spotify playlist.
   spotifyEmbed:
-    'https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO?utm_source=generator&theme=0',
+    'https://open.spotify.com/embed/playlist/266g6VvXOIOyaoi6soOKLu?utm_source=generator&theme=0',
 };
+
+const COPYRIGHT_YEAR = 2026;
+const PROJECT_RESTING_TRANSFORM = 'rotateX(8deg) rotateY(-10deg) rotateZ(1deg) translateZ(12px)';
+
+function FrameworkLogo({ framework }: { framework: string }) {
+  if (framework === 'react') {
+    return (
+      <svg className="framework-logo framework-logo-react" viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="2.4" />
+        <g fill="none" stroke="currentColor" strokeWidth="1.7">
+          <ellipse cx="16" cy="16" rx="13" ry="5.1" />
+          <ellipse cx="16" cy="16" rx="13" ry="5.1" transform="rotate(60 16 16)" />
+          <ellipse cx="16" cy="16" rx="13" ry="5.1" transform="rotate(120 16 16)" />
+        </g>
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="framework-logo framework-logo-laravel" viewBox="0 0 24 24">
+      <path d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.188.326L9.93 23.949a.316.316 0 01-.066.027c-.008.002-.016.008-.024.01a.348.348 0 01-.192 0c-.011-.002-.02-.008-.03-.012-.02-.008-.042-.014-.062-.025L.533 18.755a.376.376 0 01-.189-.326V2.974c0-.033.005-.066.014-.098.003-.012.01-.02.014-.032a.369.369 0 01.023-.058c.004-.013.015-.022.023-.033l.033-.045c.012-.01.025-.018.037-.027.014-.012.027-.024.041-.034H.53L5.043.05a.375.375 0 01.375 0L9.93 2.647h.002c.015.01.027.021.04.033l.038.027c.013.014.02.03.033.045.008.011.02.021.025.033.01.02.017.038.024.058.003.011.01.021.013.032.01.031.014.064.014.098v9.652l3.76-2.164V5.527c0-.033.004-.066.013-.098.003-.01.01-.02.013-.032a.487.487 0 01.024-.059c.007-.012.018-.02.025-.033.012-.015.021-.03.033-.043.012-.012.025-.02.037-.028.014-.01.026-.023.041-.032h.001l4.513-2.598a.375.375 0 01.375 0l4.513 2.598c.016.01.027.021.042.031.012.01.025.018.036.028.013.014.022.03.034.044.008.012.019.021.024.033.011.02.018.04.024.06.006.01.012.021.015.032zm-.74 5.032V6.179l-1.578.908-2.182 1.256v4.283zm-4.51 7.75v-4.287l-2.147 1.225-6.126 3.498v4.325zM1.093 3.624v14.588l8.273 4.761v-4.325l-4.322-2.445-.002-.003H5.04c-.014-.01-.025-.021-.04-.031-.011-.01-.024-.018-.035-.027l-.001-.002c-.013-.012-.021-.025-.031-.04-.01-.011-.021-.022-.028-.036h-.002c-.008-.014-.013-.031-.02-.047-.006-.016-.014-.027-.018-.043a.49.49 0 01-.008-.057c-.002-.014-.006-.027-.006-.041V5.789l-2.18-1.257zM5.23.81L1.47 2.974l3.76 2.164 3.758-2.164zm1.956 13.505l2.182-1.256V3.624l-1.58.91-2.182 1.255v9.435zm11.581-10.95l-3.76 2.163 3.76 2.163 3.759-2.164zm-.376 4.978L16.21 7.087 14.63 6.18v4.283l2.182 1.256 1.58.908zm-8.65 9.654l5.514-3.148 2.756-1.572-3.757-2.163-4.323 2.489-3.941 2.27z" />
+    </svg>
+  );
+}
 
 function Reveal({
   children,
@@ -160,7 +195,7 @@ function PortraitCard() {
       >
         <div className="portrait-frame">
           <Image
-            src="/daffa-portrait.jpg"
+            src="/1764921977817_upscaled.png"
             alt="Daffa Taufiqurrahman seated in a monochrome portrait"
             fill
             priority
@@ -174,6 +209,55 @@ function PortraitCard() {
         </div>
       </div>
       <div className="portrait-shadow" aria-hidden="true" />
+    </div>
+  );
+}
+
+function ProjectPreview({
+  project,
+}: {
+  project: (typeof portfolio.projects)[number];
+}) {
+  const screenRef = useRef<HTMLDivElement>(null);
+
+  function handleMove(event: MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    const screen = screenRef.current;
+    if (screen) {
+      screen.style.transform = `rotateX(${8 + y * -10}deg) rotateY(${-10 + x * 12}deg) rotateZ(1deg) translateZ(18px)`;
+    }
+  }
+
+  function resetTilt() {
+    const screen = screenRef.current;
+    if (screen) {
+      screen.style.transform = PROJECT_RESTING_TRANSFORM;
+    }
+  }
+
+  return (
+    <div
+      className="project-visual"
+      onMouseMove={handleMove}
+      onMouseLeave={resetTilt}
+    >
+      <div className="project-screen-shadow" aria-hidden="true" />
+      <div ref={screenRef} className="project-screen" style={{ transform: PROJECT_RESTING_TRANSFORM }}>
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          fill
+          sizes="(max-width: 760px) 100vw, (max-width: 1050px) 50vw, 58vw"
+          className="project-preview"
+        />
+        <div className="project-preview-scrim" aria-hidden="true" />
+        <div className="project-screen-glare" aria-hidden="true" />
+      </div>
+      <div className="project-preview-badge" aria-hidden="true">
+        <FrameworkLogo framework={project.framework} />
+      </div>
     </div>
   );
 }
@@ -239,7 +323,7 @@ export default function Home() {
           </div>
           <div className="hero-role">
             <span>Focus / 02</span>
-            <strong>Digital Products</strong>
+            <strong>UI/UX Designer</strong>
           </div>
         </div>
       </section>
@@ -261,7 +345,7 @@ export default function Home() {
             <span className="section-number">01 / SELECTED WORK</span>
             <h2>Things I&apos;ve built.</h2>
           </div>
-          <p>Replace these templates with your strongest, most relevant projects.</p>
+          <p>A selection of products I&apos;ve designed and built across real-time data, operational tools, and interface exploration.</p>
         </Reveal>
 
         <div className="project-grid">
@@ -271,27 +355,15 @@ export default function Home() {
                 className={`project-card project-card-${index + 1}`}
                 href={project.href}
                 aria-label={`View ${project.title}`}
+                target="_blank"
+                rel="noreferrer"
               >
                 <div className="project-topline">
                   <span>{project.number}</span>
                   <span>{project.type}</span>
                   <ArrowUpRight size={20} />
                 </div>
-                <div className="project-visual" aria-hidden="true">
-                  <div className="project-window">
-                    <div className="window-bar">
-                      <i />
-                      <i />
-                      <i />
-                    </div>
-                    <div className="window-content">
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  </div>
-                  <Code2 className="project-icon" size={42} strokeWidth={1} />
-                </div>
+                <ProjectPreview project={project} />
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 <div className="tag-list">
@@ -351,6 +423,9 @@ export default function Home() {
             {portfolio.experience.map((item) => (
               <article className="timeline-item" key={`${item.period}-${item.role}`}>
                 <time>{item.period}</time>
+                <div className={`institution-mark institution-mark-${item.logoKind}`}>
+                  <Image src={item.institutionLogo} alt={item.institutionLogoAlt} fill sizes="72px" />
+                </div>
                 <div>
                   <h3>{item.role}</h3>
                   <span>{item.company}</span>
@@ -368,6 +443,9 @@ export default function Home() {
             {portfolio.education.map((item) => (
               <article className="timeline-item" key={`${item.period}-${item.degree}`}>
                 <time>{item.period}</time>
+                <div className={`institution-mark institution-mark-${item.logoKind}`}>
+                  <Image src={item.institutionLogo} alt={item.institutionLogoAlt} fill sizes="72px" />
+                </div>
                 <div>
                   <h3>{item.degree}</h3>
                   <span>{item.school}</span>
@@ -440,7 +518,7 @@ export default function Home() {
           </Reveal>
 
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} DAFFA TAUFIQURRAHMAN</span>
+            <span>© {COPYRIGHT_YEAR} DAFFA TAUFIQURRAHMAN</span>
             <div className="social-links">
               {portfolio.socials.map((social) => (
                 <a key={social.label} href={social.href}>
