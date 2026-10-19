@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import StarBorder from '@/components/StarBorder';
 
 // EDIT YOUR PORTFOLIO HERE — replace these template values with your own data.
 const portfolio = {
@@ -264,12 +265,6 @@ function ProjectPreview({
 
 function PageIntro() {
   const [stage, setStage] = useState<'show' | 'leave' | 'done'>('show');
-  const introTimer = useRef<number | null>(null);
-
-  function dismissIntro() {
-    if (introTimer.current !== null) window.clearTimeout(introTimer.current);
-    setStage('leave');
-  }
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -279,10 +274,10 @@ function PageIntro() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    introTimer.current = window.setTimeout(() => setStage('leave'), 1450);
+    const timer = window.setTimeout(() => setStage('leave'), 1450);
 
     return () => {
-      if (introTimer.current !== null) window.clearTimeout(introTimer.current);
+      window.clearTimeout(timer);
       document.body.style.overflow = previousOverflow;
     };
   }, []);
@@ -301,19 +296,26 @@ function PageIntro() {
 
   return (
     <output className={`page-intro ${stage === 'leave' ? 'is-leaving' : ''}`} aria-label="Loading Daffa's portfolio">
-      <div className="intro-topline">
-        <span>DT<span className="intro-accent">.</span></span>
-        <span>PORTFOLIO / 2026</span>
-      </div>
-      <div className="intro-center">
-        <span className="intro-kicker">SOFTWARE ENGINEER & CREATIVE DEVELOPER</span>
-        <span className="intro-name">DAFFA</span>
-        <span className="intro-surname">Taufiqurrahman.</span>
-        <div className="intro-progress" aria-hidden="true"><span /></div>
-      </div>
-      <div className="intro-bottomline">
-        <span>DESIGN MEETS ENGINEERING</span>
-        <button type="button" onClick={dismissIntro}>SKIP INTRO ↗</button>
+      <div className="intro-logo-stage">
+        <StarBorder
+          as="div"
+          className="intro-logo-frame"
+          color="#b89a69"
+          trailColor="#f5f2ec"
+          duration={3}
+          thickness={1.25}
+          radius={30}
+          trailLength={0.22}
+          stars={2}
+          glow={0.4}
+          sparkle={false}
+          hover="none"
+          clickPulse={false}
+          backgroundColor="#171716"
+          borderColor="rgba(245, 242, 236, 0.16)"
+        >
+          <Image src="/favicon.svg" alt="Daffa Taufiqurrahman logo" width={112} height={112} priority />
+        </StarBorder>
       </div>
     </output>
   );

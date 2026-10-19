@@ -75,29 +75,19 @@ a {
   position: fixed;
   z-index: 1000;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(24px, 3.5vw, 56px);
-  background: #111110;
-  color: #f1f0ed;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 48%, #242320 0%, #171716 32%, #101010 75%);
   transition: clip-path 500ms cubic-bezier(0.76, 0, 0.24, 1);
   clip-path: inset(0 0 0 0);
 }
 
 .page-intro.is-leaving { clip-path: inset(0 0 100% 0); pointer-events: none; }
-.intro-topline, .intro-bottomline { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: var(--font-geist-mono); font-size: 0.65rem; letter-spacing: 0.16em; }
-.intro-topline > span:first-child { font-family: var(--font-geist-sans); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.08em; }
-.intro-accent { color: #b89a69; }
-.intro-center { display: flex; flex-direction: column; width: min(100%, 1050px); margin-inline: auto; }
-.intro-kicker { margin-bottom: 18px; color: #a8a7a2; font-family: var(--font-geist-mono); font-size: 0.66rem; letter-spacing: 0.17em; }
-.intro-name { font-size: clamp(6.5rem, 20vw, 20rem); font-weight: 600; line-height: 0.8; letter-spacing: -0.105em; }
-.intro-surname { align-self: flex-end; margin: -0.03em 0 38px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.4rem, 7.2vw, 7.8rem); font-style: italic; line-height: 1; letter-spacing: -0.075em; }
-.intro-progress { width: 100%; height: 1px; background: rgba(255, 255, 255, 0.18); }
-.intro-progress span { display: block; width: 100%; height: 100%; background: #b89a69; transform: scaleX(0); transform-origin: left; animation: intro-load 1450ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
-.intro-bottomline button { padding: 8px 0; border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; cursor: pointer; }
-.intro-bottomline button:hover { color: #d5b57f; }
-.intro-bottomline button:focus-visible { outline: 2px solid #d5b57f; outline-offset: 5px; }
+.intro-logo-stage { position: relative; display: grid; width: 280px; height: 280px; place-items: center; animation: intro-emerge 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.intro-logo-stage::before { position: absolute; inset: 0; content: ''; border: 1px solid rgba(245, 242, 236, 0.07); border-radius: 50%; box-shadow: 0 0 0 48px rgba(245, 242, 236, 0.015), 0 0 90px rgba(184, 154, 105, 0.06); pointer-events: none; }
+.page-intro .intro-logo-frame { width: 176px; height: 176px; padding: 0; border-radius: 30px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.36); }
+.intro-logo-frame img { display: block; width: 112px; height: 112px; }
 
 .scroll-progress { position: fixed; z-index: 60; top: 0; left: 0; width: 100%; height: 3px; background: #a58453; transform: scaleX(0); transform-origin: left; pointer-events: none; }
 .parallax-layer { transform: translate3d(0, var(--parallax-shift, 0px), 0); will-change: transform; }
@@ -841,7 +831,7 @@ a {
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @keyframes float-tag { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-@keyframes intro-load { to { transform: scaleX(1); } }
+@keyframes intro-emerge { from { opacity: 0; transform: translateY(15px) scale(0.92); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 @media (max-width: 1050px) {
   .shell { width: min(100% - 48px, 900px); }
@@ -856,10 +846,9 @@ a {
 }
 
 @media (max-width: 760px) {
-  .intro-topline, .intro-bottomline { font-size: 0.55rem; letter-spacing: 0.08em; }
-  .intro-center { width: 100%; }
-  .intro-name { font-size: clamp(6.3rem, 27vw, 13rem); }
-  .intro-surname { margin-bottom: 30px; font-size: clamp(2.25rem, 9vw, 5rem); }
+  .intro-logo-stage { width: 240px; height: 240px; }
+  .page-intro .intro-logo-frame { width: 154px; height: 154px; }
+  .intro-logo-frame img { width: 98px; height: 98px; }
   .shell { width: calc(100% - 36px); }
   .section-space { padding-block: 96px; }
   .site-header {
