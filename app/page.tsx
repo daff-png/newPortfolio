@@ -262,8 +262,66 @@ function ProjectPreview({
   );
 }
 
+function PageIntro() {
+  const [stage, setStage] = useState<'show' | 'leave' | 'done'>('show');
+  const introTimer = useRef<number | null>(null);
+
+  function dismissIntro() {
+    if (introTimer.current !== null) window.clearTimeout(introTimer.current);
+    setStage('leave');
+  }
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const frame = window.requestAnimationFrame(() => setStage('done'));
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    introTimer.current = window.setTimeout(() => setStage('leave'), 1450);
+
+    return () => {
+      if (introTimer.current !== null) window.clearTimeout(introTimer.current);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (stage !== 'leave') return;
+    const timer = window.setTimeout(() => setStage('done'), 500);
+    return () => window.clearTimeout(timer);
+  }, [stage]);
+
+  useEffect(() => {
+    if (stage === 'done') document.body.style.overflow = '';
+  }, [stage]);
+
+  if (stage === 'done') return null;
+
+  return (
+    <output className={`page-intro ${stage === 'leave' ? 'is-leaving' : ''}`} aria-label="Loading Daffa's portfolio">
+      <div className="intro-topline">
+        <span>DT<span className="intro-accent">.</span></span>
+        <span>PORTFOLIO / 2026</span>
+      </div>
+      <div className="intro-center">
+        <span className="intro-kicker">SOFTWARE ENGINEER & CREATIVE DEVELOPER</span>
+        <span className="intro-name">DAFFA</span>
+        <span className="intro-surname">Taufiqurrahman.</span>
+        <div className="intro-progress" aria-hidden="true"><span /></div>
+      </div>
+      <div className="intro-bottomline">
+        <span>DESIGN MEETS ENGINEERING</span>
+        <button type="button" onClick={dismissIntro}>SKIP INTRO ↗</button>
+      </div>
+    </output>
+  );
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -272,8 +330,53 @@ export default function Home() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const layers = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const viewport = window.innerHeight;
+      const maxScroll = document.documentElement.scrollHeight - viewport;
+      if (progressRef.current) {
+        const progress = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
+        progressRef.current.style.transform = `scaleX(${progress})`;
+      }
+
+      for (const layer of layers) {
+        const rect = layer.getBoundingClientRect();
+        if (motionQuery.matches || rect.bottom < -120 || rect.top > viewport + 120) {
+          layer.style.setProperty('--parallax-shift', '0px');
+          continue;
+        }
+        const depth = Number(layer.dataset.parallax) || 0;
+        const distance = viewport / 2 - (rect.top + rect.height / 2);
+        const shift = Math.max(-90, Math.min(90, distance * depth));
+        layer.style.setProperty('--parallax-shift', `${shift.toFixed(1)}px`);
+      }
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    motionQuery.addEventListener('change', requestUpdate);
+    return () => {
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+      motionQuery.removeEventListener('change', requestUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <main>
+      <PageIntro />
+      <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
 
@@ -292,6 +395,8 @@ export default function Home() {
       </header>
 
       <section className="hero shell" id="home">
+        <span className="hero-outline-word parallax-layer" data-parallax="0.08" aria-hidden="true">PORTFOLIO</span>
+        <div className="hero-ambient-ring parallax-layer" data-parallax="-0.1" aria-hidden="true" />
         <div className="hero-copy">
           <div className="eyebrow hero-eyebrow">
             <span className="status-dot" />
@@ -313,7 +418,9 @@ export default function Home() {
           </div>
         </div>
 
-        <PortraitCard />
+        <div className="portrait-parallax parallax-layer" data-parallax="0.13">
+          <PortraitCard />
+        </div>
 
         <div className="hero-aside">
           <p className="vertical-label">BASED IN INDONESIA</p>
@@ -340,6 +447,7 @@ export default function Home() {
       </div>
 
       <section className="work-section shell section-space" id="work">
+        <span className="work-watermark parallax-layer" data-parallax="0.05" aria-hidden="true">01</span>
         <Reveal className="section-heading">
           <div>
             <span className="section-number">01 / SELECTED WORK</span>
@@ -378,6 +486,7 @@ export default function Home() {
       </section>
 
       <section className="about-section section-space" id="about">
+        <div className="about-orbit parallax-layer" data-parallax="-0.08" aria-hidden="true" />
         <div className="shell about-grid">
           <Reveal className="about-title-wrap">
             <span className="section-number light">02 / ABOUT</span>
