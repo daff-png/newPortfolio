@@ -105,9 +105,9 @@ const portfolio = {
     'Creative Development',
   ],
   socials: [
-    { label: 'LinkedIn', href: '#' },
-    { label: 'GitHub', href: '#' },
-    { label: 'Instagram', href: '#' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daffa-taufiqurrahman-05a3b9332' },
+    { label: 'GitHub', href: 'https://github.com/daff-png' },
+    { label: 'Instagram', href: 'https://www.instagram.com/dfatq_/' },
   ],
   // Replace the playlist ID in this URL with your favorite Spotify playlist.
   spotifyEmbed:
