@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: 'Daffa Taufiqurrahman — Software Engineer',
   description:
     'The portfolio of Daffa Taufiqurrahman, a software engineer crafting thoughtful digital products and memorable experiences.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
